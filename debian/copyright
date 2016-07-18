@@ -1,0 +1,9 @@
+Copyright (c) 2006-2009 by Sergio Talens-Oliag <sto@debian.org>.
+
+This is a native debian package, the latest official version is the one
+distributed with Debian.
+
+The software is licensed under the GPL-3.
+
+On Debian systems, the complete text of the GNU General Public License v3 can
+be found in `/usr/share/common-licenses/GPL-3'.

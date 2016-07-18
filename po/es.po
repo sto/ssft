@@ -1,0 +1,252 @@
+# Spanish translation for ssft
+# Copyright © 2006 Sergio Talens-Oliag <sto@debian.org>
+# This file is distributed under the same license as the ssft package.
+# Sergio Talens-Oliag <sto@debian.org>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: ssft\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-07-14 00:40+0200\n"
+"PO-Revision-Date: 2006-01-12 14:19+0100\n"
+"Last-Translator: Sergio Talens-Oliag <sto@debian.org>\n"
+"Language-Team: Spanish Debian L10N <debian-l10n-spanish@lists.debian.org\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/ssft.sh:142
+#, sh-format
+msgid ""
+"Shell Script Frontend Tool (version $_l_version)\n"
+"Usage: . ssft.sh\n"
+"\n"
+"When called directly the program supports the following options:\n"
+"\n"
+" -d,--doc [FUNCTIONS]  Prints the list of available functions. If function\n"
+"                       names are given prints functions' documentation.\n"
+" -h,--help             This message\n"
+" -v,--version          File version\n"
+msgstr ""
+"Shell Script Frontend Tool (versión $_l_version)\n"
+"Forma de uso: . ssft.sh\n"
+"\n"
+"Cuando se invoca directamente el programa soporta las siguientes opciones:\n"
+"\n"
+" -d,--doc [FUNCIONES]  Imprime la lista de funciones disponibles. Si se\n"
+"                       dan nombres de funciones imprime su documentación.\n"
+" -h,--help             Este mensaje\n"
+" -v,--version          Versión del fichero\n"
+
+#: src/ssft.sh:160
+#, sh-format
+msgid ""
+"Copyright (C) 2006-2009 Sergio Talens-Oliag <sto@debian.org>\n"
+"This is free software; see the source for copying conditions.  There is NO\n"
+"warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+msgstr ""
+"Copyright (C) 2006-2009 Sergio Talens-Oliag <sto@debian.org>\n"
+"Este programa es software libre; vea las condiciones de copia en el código.\n"
+"No hay NINGUNA GARANTÍA; ni la garantía MERCANTIL implícita ni la "
+"ADECUACIÓN\n"
+"PARA UN PROPÓSITO PARTICULAR."
+
+#: src/ssft.sh:251 src/ssft.sh:300
+msgid "Press ENTER to CONTINUE"
+msgstr "Pulse Intro para CONTINUAR"
+
+#: src/ssft.sh:353
+#, sh-format
+msgid ""
+"The error message was:\n"
+"\n"
+"$_l_EMSG"
+msgstr ""
+"El mensaje de error es:\n"
+"\n"
+"$_lEMSG"
+
+#: src/ssft.sh:370
+msgid "Filename"
+msgstr "Nombre de fichero"
+
+#: src/ssft.sh:420
+msgid "Directory"
+msgstr "Directorio"
+
+#: src/ssft.sh:614
+#, sh-format
+msgid " (defaults to '$_l_default')"
+msgstr " (por defecto vale '$_l_default')"
+
+#: src/ssft.sh:704
+msgid "Option number (0 ends)"
+msgstr "Número de opción (0 termina)"
+
+#: src/ssft.sh:705 src/ssft.sh:902
+msgid "Options"
+msgstr "Opciones"
+
+#: src/ssft.sh:901
+msgid "Option number (0 cancels)"
+msgstr "Número de opción (0 cancela)"
+
+#: src/ssft.sh:1082
+msgid "Yes"
+msgstr "Sí"
+
+#: src/ssft.sh:1083
+msgid "No"
+msgstr "No"
+
+#: src/ssft.sh:1084
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: tests/ssft-test.sh:34
+msgid "Result"
+msgstr "Resultado"
+
+#: tests/ssft-test.sh:35
+msgid "The user CANCELLED the operation"
+msgstr "El usuario CANCELÓ la operación"
+
+#: tests/ssft-test.sh:38
+#, sh-format
+msgid ""
+"Usage: $progname FRONTENDS\n"
+"\n"
+"Where FRONTENDS is one or more of zenity, kdialog, dialog, text or "
+"noninteractive"
+msgstr ""
+"Forma de uso:  $progname INTERFACES\n"
+"\n"
+"Donde INTERFACES es uno o más de zenity, kdialog, dialog, text o "
+"noninteractive"
+
+#: tests/ssft-test.sh:61
+#, sh-format
+msgid "TESTING FRONTEND '$frontend'"
+msgstr "PROBANDO INTERFAZ '$frontend'"
+
+#: tests/ssft-test.sh:68
+msgid "Display message test"
+msgstr "Prueba de visualización de mensaje"
+
+#: tests/ssft-test.sh:69
+msgid ""
+"This is a simple message\n"
+"It is shown using ssft_display_message"
+msgstr ""
+"Este es un mensaje simple\n"
+"Se muestra empleando ssft_display_message"
+
+#: tests/ssft-test.sh:76
+msgid "Display error test"
+msgstr "Prueba de visualización de error"
+
+#: tests/ssft-test.sh:77
+msgid ""
+"This is an error message\n"
+"It is shown using ssft_display_error"
+msgstr ""
+"Este es un mensaje de error\n"
+"Se muestra empleando ssft_display_error"
+
+#: tests/ssft-test.sh:84
+msgid "Select a file"
+msgstr "Seleccione un fichero"
+
+#: tests/ssft-test.sh:85
+msgid "Choose a file, please!"
+msgstr "Seleccione un fichero, por favor"
+
+#: tests/ssft-test.sh:87 tests/ssft-test.sh:99 tests/ssft-test.sh:123
+#: tests/ssft-test.sh:136 tests/ssft-test.sh:148
+#, sh-format
+msgid "The user said: '$SSFT_RESULT'"
+msgstr "El usuario dijo: '$SSFT_RESULT'"
+
+#: tests/ssft-test.sh:96
+msgid "Select a directory"
+msgstr "Seleccione un directorio"
+
+#: tests/ssft-test.sh:97
+msgid "Choose a directory, please!"
+msgstr "Seleccione un directorio, por favor"
+
+#: tests/ssft-test.sh:108
+msgid "Sample PROGRESSBAR"
+msgstr "Ejemplo de BARRA DE PROGRESO"
+
+#: tests/ssft-test.sh:111
+#, sh-format
+msgid "We are at $x %"
+msgstr "Vamos por el $x %"
+
+#: tests/ssft-test.sh:120 tests/ssft-test.sh:133
+msgid "Read STRING"
+msgstr "Leer CADENA"
+
+#: tests/ssft-test.sh:121 tests/ssft-test.sh:134
+msgid "Gimme a string"
+msgstr "Dame una cadena"
+
+#: tests/ssft-test.sh:145
+msgid "Read PASSWD"
+msgstr "Leer CLAVE"
+
+#: tests/ssft-test.sh:146
+msgid "Gimme a password"
+msgstr "Dame una clave"
+
+#: tests/ssft-test.sh:157 tests/ssft-test.sh:173
+msgid "Select MULTIPLE"
+msgstr "Selección MÚLTIPLE"
+
+#: tests/ssft-test.sh:158 tests/ssft-test.sh:174
+msgid "Select ONE or MORE Distributions"
+msgstr "Seleccione UNA o MÁS distribuciones"
+
+#: tests/ssft-test.sh:161 tests/ssft-test.sh:177 tests/ssft-test.sh:190
+#: tests/ssft-test.sh:204
+#, sh-format
+msgid "The user selected: '$SSFT_RESULT'"
+msgstr "El usuario seleccionó: '$SSFT_RESULT'"
+
+#: tests/ssft-test.sh:186 tests/ssft-test.sh:200
+msgid "Select SINGLE"
+msgstr "Selección SIMPLE"
+
+#: tests/ssft-test.sh:187 tests/ssft-test.sh:201
+msgid "Select ONE Distribution"
+msgstr "Seleccione UNA distribución"
+
+#: tests/ssft-test.sh:213
+msgid "Showing the source code of this test"
+msgstr "Mostrando el código de este test"
+
+#: tests/ssft-test.sh:215
+#, sh-format
+msgid "The file '$script_file' was shown"
+msgstr "Se mostró el fichero '$script_file'"
+
+#: tests/ssft-test.sh:217
+#, sh-format
+msgid "The file '$script_file' was NOT shown"
+msgstr "NO se mostró el fichero '$script_file'"
+
+#: tests/ssft-test.sh:224
+msgid "Title for Yes/No Question"
+msgstr "Título para pregunta de Sí/No"
+
+#: tests/ssft-test.sh:225
+msgid "All was OK?"
+msgstr "¿Todo correcto?"
+
+#: tests/ssft-test.sh:227
+msgid "The user said YES"
+msgstr "El usuario dijo SÍ"
+
+#: tests/ssft-test.sh:229
+msgid "The user said NO"
+msgstr "El usuario dijo NO"

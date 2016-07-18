@@ -1,0 +1,113 @@
+ssft (0.9.13) unstable; urgency=low
+
+  * Added ssft_directory_selection function (Closes: Bug#536734).
+  * Added a test for the function.
+  * Updated translations.
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Tue, 14 Jul 2009 00:47:20 +0200
+
+ssft (0.9.12) unstable; urgency=low
+
+  * Updated standards, packaging and manual page.
+  * Re-licensed under the GPL-3.
+  * Applied patch to update ssft_progress_bar for kdialog (KDE4) dbus
+    interface (Closes: Bug#532530).
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Wed, 10 Jun 2009 23:08:55 +0200
+
+ssft (0.9.11) unstable; urgency=low
+
+  * Fix ssft_choose_frontend behaviour when running on X and neither zenity
+    nor kdialog are available.
+  * Updated standards to 3.7.2.2. The package does not respect the Debian
+  * policy section entitled "Scripts" (§10.4) as updated on version 3.7.0.0
+    (the ssft library is installed as `/usr/bin/ssft.sh`), but I feel that in
+    this particular case it makes sense to keep the `.sh` extension; it was
+    used with the same idea of  the `/etc/init.d/*.sh` scripts (see
+    `/etc/init.d/README`), that is, the script has to be sourced, not
+    executed.
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Wed, 27 Dec 2006 10:24:53 +0100
+
+ssft (0.9.10) unstable; urgency=low
+
+  * The make Jordi KDE free release.
+  * Changed the Recommends line, now it uses zenity | kdebase-bin to avoid
+    installing kdebase-bin (or zenity) when using 'aptitude install'. 
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Wed, 26 Apr 2006 23:41:02 +0200
+
+ssft (0.9.9) unstable; urgency=low
+
+  * Fixed small error on default handling for non-interactive use of
+    ssft_select_single.
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Mon, 20 Mar 2006 22:00:01 +0100
+
+ssft (0.9.8) unstable; urgency=low
+
+  * Added french translation (Closes: Bug#357375).
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Fri, 17 Mar 2006 21:12:22 +0100
+
+ssft (0.9.7) unstable; urgency=low
+
+  * Changed po naming scheme to make it more standard (Closes: Bug#356057).
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Thu,  9 Mar 2006 14:18:32 +0100
+
+ssft (0.9.6) unstable; urgency=low
+
+  * Don't force set -e when sourcing ssft.sh, allowing interactive testing of
+    the functions without surprises like unexpected exits from the shell.
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Wed,  8 Mar 2006 23:12:43 +0100
+
+ssft (0.9.5) unstable; urgency=low
+
+  [ Jordi Mallach ]
+  * Update Catalan and Spanish translations.
+
+  [ Sergio Talens-Oliag ]
+  * Fix behaviour when gettext.sh is not available.
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Tue,  7 Mar 2006 22:33:42 +0100
+
+ssft (0.9.4) unstable; urgency=low
+
+  * Reintroduce 'ssft_display_emsg' function (a lot of my own code uses it ;).
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Tue, 21 Feb 2006 13:27:43 +0100
+
+ssft (0.9.3) unstable; urgency=low
+
+  * Modified defaults usage on select_single with the text frontend (now an
+    empty string selects the default value).
+  * Fixed package description on the control file (mention kdialog).
+  * Updated translations.
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Mon, 20 Feb 2006 10:59:08 +0100
+
+ssft (0.9.2) unstable; urgency=low
+
+  * Added kdialog support.
+  * Added support for default values on read_string, select_simple and
+    select_multiple functions.
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Sun, 19 Feb 2006 20:00:02 +0100
+
+ssft (0.9.1) unstable; urgency=low
+
+  * Fixed compatibility issues with non Debian systems following advices from:
+      http://mixinet.net/stoblog/debian/20060214-ssft?showcomments=yes
+    Have not fixed $(( )) and $() usage as it seems POSIX supports them (see
+    http://www.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html).
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Wed, 15 Feb 2006 11:01:52 +0100
+
+ssft (0.9) unstable; urgency=low
+
+  * Initial version, should be 1.0, but maybe a little bit of testing before
+    that is better ;).
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Tue, 14 Feb 2006 20:38:34 +0100

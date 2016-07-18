@@ -1,0 +1,30 @@
+.TH "ssft.sh" "1" "Jun 2009" "Debian" "SSFT"
+.SH NAME
+ssft.sh \- library of shell script frontend functions
+.SH SYNOPSIS
+.B \. ssft.sh
+.SH DESCRIPTION
+\fBssft.sh\fP is a library of shell functions that must be sourced from other
+scripts. If the script is executed without arguments it prints an usage
+message and also supports the options \fI--doc\fP, \fI--help\fP and
+\fI--version\fP.
+.PP
+To get a list of available functions call the script with the \fI--doc\fP
+argument and to get a description of what a given function does call the
+script with \fI--doc FUNCTION_NAME\fP.
+.PP
+On the typical case the library must be sourced and the \fBSSFT_FRONTEND\fP
+variable must be set to the desired frontend (\fIzenity\fP, \fIdialog\fP or
+\fItext\fP); if the variable is not set the default frontend is
+\fInoninteractive\fP.
+.PP
+To choose the theorically best looking frontend use the
+function \fIssft_choose_frontend\fP as follows:
+.PP
+.RS
+\&. ssft.sh
+.br
+[ \-n "$SSFT_FRONTEND" ] || SSFT_FRONTEND="$( ssft_choose_frontend )"
+.RE
+.SH AUTHOR
+Written by Sergio Talens-Oliag <sto@debian.org>.

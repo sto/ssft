@@ -1,0 +1,253 @@
+# Catalan translation for ssft
+# Copyright © 2006 Sergio Talens-Oliag <sto@debian.org>
+# This file is distributed under the same license as the ssft package.
+# Jordi Mallach <jordi@debian.org>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: ssft\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-07-14 00:40+0200\n"
+"PO-Revision-Date: 2006-02-21 13:47+0100\n"
+"Last-Translator: Jordi Mallach <jordi@debian.org>\n"
+"Language-Team: Catalan Debian L10N <debian-l10n-catalan@lists.debian.org\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/ssft.sh:142
+#, sh-format
+msgid ""
+"Shell Script Frontend Tool (version $_l_version)\n"
+"Usage: . ssft.sh\n"
+"\n"
+"When called directly the program supports the following options:\n"
+"\n"
+" -d,--doc [FUNCTIONS]  Prints the list of available functions. If function\n"
+"                       names are given prints functions' documentation.\n"
+" -h,--help             This message\n"
+" -v,--version          File version\n"
+msgstr ""
+"Shell Script Frontend Tool (versió $_l_version)\n"
+"Forma d'ús: . ssft.sh\n"
+"\n"
+"Quan es crida directament, el programa suporta les opcions següents:\n"
+"\n"
+" -d,--doc [FUNCIONS]   Mostra la llista de funcions disponibles. Si es "
+"donen\n"
+"                       noms de funcions, mostra la documentació de la "
+"funció.\n"
+" -h,--help             Aquest missatge\n"
+" -v,--version          Versió del fitxer\n"
+
+#: src/ssft.sh:160
+#, sh-format
+msgid ""
+"Copyright (C) 2006-2009 Sergio Talens-Oliag <sto@debian.org>\n"
+"This is free software; see the source for copying conditions.  There is NO\n"
+"warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+msgstr ""
+"Copyright © 2006-2009 Sergio Talens-Oliag <sto@debian.org>\n"
+"Això és programari lliure; vegeu el codi font per a les condicions de "
+"còpia.\n"
+"No hi ha CAP garantia; ni tan sols de COMERCIABILITAT o ADEQUACIÓ A UN\n"
+"PROPÒSIT PARTICULAR."
+
+#: src/ssft.sh:251 src/ssft.sh:300
+msgid "Press ENTER to CONTINUE"
+msgstr "Premeu Intro per a CONTINUAR"
+
+#: src/ssft.sh:353
+#, sh-format
+msgid ""
+"The error message was:\n"
+"\n"
+"$_l_EMSG"
+msgstr ""
+"El missatge d'error és:\n"
+"\n"
+"$_l_EMSG"
+
+#: src/ssft.sh:370
+msgid "Filename"
+msgstr "Nom del fitxer"
+
+#: src/ssft.sh:420
+msgid "Directory"
+msgstr "Directori"
+
+#: src/ssft.sh:614
+#, sh-format
+msgid " (defaults to '$_l_default')"
+msgstr " (per defecte val '$_l_default')"
+
+#: src/ssft.sh:704
+msgid "Option number (0 ends)"
+msgstr "Número d'opció (0 acaba)"
+
+#: src/ssft.sh:705 src/ssft.sh:902
+msgid "Options"
+msgstr "Opcions"
+
+#: src/ssft.sh:901
+msgid "Option number (0 cancels)"
+msgstr "Número d'opció (0 cancel·la)"
+
+#: src/ssft.sh:1082
+msgid "Yes"
+msgstr "Sí"
+
+#: src/ssft.sh:1083
+msgid "No"
+msgstr "No"
+
+#: src/ssft.sh:1084
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#: tests/ssft-test.sh:34
+msgid "Result"
+msgstr "Resultat"
+
+#: tests/ssft-test.sh:35
+msgid "The user CANCELLED the operation"
+msgstr "L'usuari ha CANCEL·LAT l'operació"
+
+#: tests/ssft-test.sh:38
+#, sh-format
+msgid ""
+"Usage: $progname FRONTENDS\n"
+"\n"
+"Where FRONTENDS is one or more of zenity, kdialog, dialog, text or "
+"noninteractive"
+msgstr ""
+"Forma d'ús: $progname INTERFÍCIES\n"
+"\n"
+"On INTERFÍCIES és una o més de zenity, kdialog, dialog, text o noninteractive"
+
+#: tests/ssft-test.sh:61
+#, sh-format
+msgid "TESTING FRONTEND '$frontend'"
+msgstr "S'ESTÀ PROVANT LA INTERFÍCIE «$frontend»"
+
+#: tests/ssft-test.sh:68
+msgid "Display message test"
+msgstr "Prova de visualització d'un missatge"
+
+#: tests/ssft-test.sh:69
+msgid ""
+"This is a simple message\n"
+"It is shown using ssft_display_message"
+msgstr ""
+"Això és un missatge simple.\n"
+"Es mostra utilitzant ssft_display_message"
+
+#: tests/ssft-test.sh:76
+msgid "Display error test"
+msgstr "Prova de visualització d'un error"
+
+#: tests/ssft-test.sh:77
+msgid ""
+"This is an error message\n"
+"It is shown using ssft_display_error"
+msgstr ""
+"Això és un missatge d'error.\n"
+"Es mostra utilitzant ssft_display_error"
+
+#: tests/ssft-test.sh:84
+msgid "Select a file"
+msgstr "Selecció d'un fitxer"
+
+#: tests/ssft-test.sh:85
+msgid "Choose a file, please!"
+msgstr "Si us plau, seleccioneu un fitxer!"
+
+#: tests/ssft-test.sh:87 tests/ssft-test.sh:99 tests/ssft-test.sh:123
+#: tests/ssft-test.sh:136 tests/ssft-test.sh:148
+#, sh-format
+msgid "The user said: '$SSFT_RESULT'"
+msgstr "L'usuari ha dit: «$SSFT_RESULT»"
+
+#: tests/ssft-test.sh:96
+msgid "Select a directory"
+msgstr "Selecció d'un directori"
+
+#: tests/ssft-test.sh:97
+msgid "Choose a directory, please!"
+msgstr "Si us plau, seleccioneu un directori!"
+
+#: tests/ssft-test.sh:108
+msgid "Sample PROGRESSBAR"
+msgstr "Prova de BARRA DE PROGRÉS"
+
+#: tests/ssft-test.sh:111
+#, sh-format
+msgid "We are at $x %"
+msgstr "Estem al $x%"
+
+#: tests/ssft-test.sh:120 tests/ssft-test.sh:133
+msgid "Read STRING"
+msgstr "Lectura d'una CADENA"
+
+#: tests/ssft-test.sh:121 tests/ssft-test.sh:134
+msgid "Gimme a string"
+msgstr "Introduïu una cadena"
+
+#: tests/ssft-test.sh:145
+msgid "Read PASSWD"
+msgstr "Lectura d'una CONTRASENYA"
+
+#: tests/ssft-test.sh:146
+msgid "Gimme a password"
+msgstr "Introduïu una contrasenya"
+
+#: tests/ssft-test.sh:157 tests/ssft-test.sh:173
+msgid "Select MULTIPLE"
+msgstr "Selecció MÚLTIPLE"
+
+#: tests/ssft-test.sh:158 tests/ssft-test.sh:174
+msgid "Select ONE or MORE Distributions"
+msgstr "Seleccioneu UNA o MÉS distribucions"
+
+#: tests/ssft-test.sh:161 tests/ssft-test.sh:177 tests/ssft-test.sh:190
+#: tests/ssft-test.sh:204
+#, sh-format
+msgid "The user selected: '$SSFT_RESULT'"
+msgstr "L'usuari ha seleccionat: «$SSFT_RESULT»"
+
+#: tests/ssft-test.sh:186 tests/ssft-test.sh:200
+msgid "Select SINGLE"
+msgstr "Selecció SIMPLE"
+
+#: tests/ssft-test.sh:187 tests/ssft-test.sh:201
+msgid "Select ONE Distribution"
+msgstr "Seleccioneu UNA distribució"
+
+#: tests/ssft-test.sh:213
+msgid "Showing the source code of this test"
+msgstr "Visualització del codi font d'aquesta prova"
+
+#: tests/ssft-test.sh:215
+#, sh-format
+msgid "The file '$script_file' was shown"
+msgstr "S'ha mostrat el fitxer «$script_file»"
+
+#: tests/ssft-test.sh:217
+#, sh-format
+msgid "The file '$script_file' was NOT shown"
+msgstr "NO s'ha mostrat el fitxer «$script_file»"
+
+#: tests/ssft-test.sh:224
+msgid "Title for Yes/No Question"
+msgstr "Títol per a una pregunta Sí/No"
+
+#: tests/ssft-test.sh:225
+msgid "All was OK?"
+msgstr "Està tot bé?"
+
+#: tests/ssft-test.sh:227
+msgid "The user said YES"
+msgstr "L'usuari ha dit SÍ"
+
+#: tests/ssft-test.sh:229
+msgid "The user said NO"
+msgstr "L'usuari ha dit NO"

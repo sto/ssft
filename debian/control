@@ -1,0 +1,21 @@
+Source: ssft
+Section: utils
+Priority: optional
+Maintainer: Sergio Talens-Oliag <sto@debian.org>
+Build-Depends: debhelper (>= 7)
+Build-Depends-Indep: dpkg-dev (>= 1.9), gettext
+Standards-Version: 3.8.2
+
+Package: ssft
+Architecture: all
+Depends: ${misc:Depends}
+Recommends: gettext-base, dialog, zenity | kdebase-bin
+Description: Shell Scripts Frontend Tool
+ Shell function library useful to build shell script frontends.
+ .
+ The library defines a set of functions to display messages and read values
+ from the user on X (using zenity or kdialog) or console (using dialog or
+ plain text) and has been designed to be used by sourcing the library code
+ from other scripts.
+ .
+ The library supports L10N if gettext.sh is installed. 
