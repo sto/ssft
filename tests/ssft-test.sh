@@ -3,8 +3,7 @@
 # File:        ssft_tests.sh
 # Description: Script to test the ssft funtions
 # Author:      Sergio Talens-Oliag <sto@debian.org>
-# Copyright:   (c) 2005, 2006 Sergio Talens-Oliag <sto@debian.org>
-# SVN Id:      $Id: ssft-test.sh 86 2009-07-13 22:48:13Z sto $
+# Copyright:   (c) 2005-2016 Sergio Talens-Oliag <sto@debian.org>
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

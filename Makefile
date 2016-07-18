@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 # -*- mode: makefile; coding: utf-8 -*-
-# Copyright © 2006 Sergio Talens-Oliag <sto@debian.org>
+# Copyright © 2006-2016 Sergio Talens-Oliag <sto@debian.org>
 
 # VARIABLES
 DESTDIR = 

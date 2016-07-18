@@ -1,3 +1,13 @@
+ssft (0.9.14) UNRELEASED; urgency=low
+
+  * Use SSFT_PAGER, /usr/bin/sensible-pager or fallback to the PAGER variable
+    if sensible-pager is not available (Closes: Bug#576524).
+  * Added a README file to the package in asciidoc format (Closes: Bug#576525).
+  * Fixed small manpage typo (Closes: Bug#580132).
+  * Updated standards.
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Tue, 19 Jul 2016 00:51:15 +0200
+
 ssft (0.9.13) unstable; urgency=low
 
   * Added ssft_directory_selection function (Closes: Bug#536734).

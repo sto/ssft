@@ -1,0 +1,73 @@
+= Shell Scripts Frontend Tool
+Sergio Talens-Oliag <sto@debian.org>
+
+Shell function library useful to build script frontends.
+
+The library defines a set of functions to display messages and read values from
+the user on X (using `zenity` or `kdialog`) or console (using `dialog` or
+_plain text_) and has been designed to be used by sourcing the library code
+from other scripts.
+
+The library supports L10N if `gettext.sh` is installed.
+
+== Basic usage
+
+On the typical case the library must be sourced and the `SSFT_FRONTEND`
+variable must be set to the desired frontend (`zenity`, `dialog` or `text`); if the
+variable is not set the default frontend is `noninteractive`.
+
+To choose the theoretically best looking frontend use the function
+`ssft_choose_frontend` as follows:
+
+[source,sh]
+----
+. ssft.sh || exit 1
+[ -n "$SSFT_FRONTEND" ] || SSFT_FRONTEND="$( ssft_choose_frontend )"
+----
+
+== Functions and usage documentation
+
+If the script is executed without arguments it prints an usage message and also
+supports the options `--doc`, `--help` and `--version`
+
+To get a list of available functions call the script with the `--doc` or `-d` argument:
+
+[source,console]
+----
+$ ssft.sh -d
+ssft_set_textdomain
+ssft_reset_textdomain
+ssft_pager
+ssft_choose_frontend
+ssft_print_text_title
+ssft_display_message
+ssft_display_error
+ssft_display_emsg
+ssft_file_selection
+ssft_directory_selection
+ssft_progress_bar
+ssft_read_string
+ssft_read_password
+ssft_select_multiple
+ssft_select_single
+ssft_yesno
+ssft_show_file
+----
+
+To get a description of what a given function does call the script with the
+arguments `--doc FUNCTION_NAME`, i. e.:
+
+[source,console]
+----
+$ ssft.sh -d ssft_choose_frontend
+
+Function: ssft_choose_frontend
+
+Description: print the name of the preferred frontend, but don't set it
+----
+
+== Sample scripts
+
+See the `ssft-test.sh` script for a full usage example; it is distributed with
+the code inside the `test` directory and the Debian package leaves a copy on
+`/usr/share/doc/ssft/examples/ssft-test.sh.gz`.

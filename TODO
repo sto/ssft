@@ -1,0 +1,4 @@
+Review kdialog related bugs:
+
+- #406928 Progress bar doesn't show title
+- #406936 Window size fix in kdialog

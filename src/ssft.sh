@@ -5,8 +5,7 @@
 #              this file is executable to be loadable without hardcoding
 #              a PATH.
 # Author:      Sergio Talens-Oliag <sto@debian.org>
-# Copyright:   (c) 2006 Sergio Talens-Oliag <sto@debian.org>
-# SVN Id:      $Id: ssft.sh 86 2009-07-13 22:48:13Z sto $
+# Copyright:   (c) 2006-2016 Sergio Talens-Oliag <sto@debian.org>
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,7 +48,6 @@ else
   }
 fi
 
-# ============ #
 # L10N Support #
 # ============ #
 
@@ -198,6 +196,28 @@ unset -f ssft_sh_fhs_test
 #############
 # FUNCTIONS #
 #############
+
+# ================== #
+# SSFT_PAGER support #
+# ================== #
+
+# Function: ssft_pager
+# 
+# Description: Calls the SSFT_PAGER program if the variable is set; if it isn't
+# tries with 'sensible-pager' if it exist and is executable or falls back to
+# using the PAGER variable or 'more' if it is not set
+
+ssft_pager() {
+  if [ -n "$SSFT_PAGER" ]; then
+    eval `echo $SSFT_PAGER`
+  elif [ -x "/usr/bin/sensible-pager" ]; then
+    /usr/bin/sensible-pager
+  elif [ -n "$PAGER" ]; then
+    eval `echo $PAGER`
+  else
+    more
+  fi
+}
 
 # ================== #
 # FRONTEND FUNCTIONS #
@@ -826,7 +846,7 @@ ssft_select_multiple() {
         _l_count=$(( $_l_count + 1 ))
 	_l_ss="$(echo "$_l_selected_items" | cut -b $_l_count)"
         printf " (%s) %2s. %s\n" "$_l_ss" "$_l_count" "$_l_item"
-      done | more
+      done | ssft_pager
       echo ""
       printf "%s: " "$_l_PROMPT_STR"
       read _l_option
@@ -1005,7 +1025,7 @@ ssft_select_single() {
 	  _l_selected=" "
 	fi
         printf "%s %2s. %s\n" "$_l_selected" "$_l_count" "$_l_item"
-      done | more
+      done | ssft_pager
       echo ""
       printf "%s: " "$_l_PROMPT_STR"
       read _l_option
@@ -1182,7 +1202,7 @@ ssft_show_file() {
   ;;
   text)
     ssft_print_text_title "$_l_title"
-    more "$_l_file"
+    ssft_pager "$_l_file"
     echo ""
   ;;
   *)
@@ -1195,4 +1215,4 @@ ssft_show_file() {
 }
 
 # ------
-# SVN Id: $Id: ssft.sh 86 2009-07-13 22:48:13Z sto $
+# ssft.sh @VERSION@
