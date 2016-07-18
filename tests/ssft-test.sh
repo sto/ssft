@@ -236,4 +236,4 @@ script_file="$0"
 ssft_sh_frontend_tests "$@"
 
 # ------
-# SVN Id: $Id: ssft-test.sh 86 2009-07-13 22:48:13Z sto $
+# ssft-test.sh
