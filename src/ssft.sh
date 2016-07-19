@@ -121,12 +121,12 @@ ssft_sh_fhs_test() {
     else
       awk -v "name=$1" '/^# Function:/ { \
         if (($3 == name)) {              \
-	  do {                           \
-	    if (match($0, "^#")) {       \
-	      print substr($0,3);        \
-	    } else {                     \
-	      printf "\n"; break;        \
-	    }                            \
+      do {                           \
+        if (match($0, "^#")) {       \
+          print substr($0,3);        \
+        } else {                     \
+          printf "\n"; break;        \
+        }                            \
           } while (getline);             \
         }                                \
       }' $_l_ssft_sh
@@ -155,7 +155,7 @@ When called directly the program supports the following options:
   ssft_sh_version() {
     ssft_set_textdomain
     _l_MSG="`eval_gettext \
-"Copyright (C) 2006-2009 Sergio Talens-Oliag <sto@debian.org>
+"Copyright (C) 2006-2016 Sergio Talens-Oliag <sto@debian.org>
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."`"
     ssft_reset_textdomain
@@ -169,8 +169,8 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."`"
       _l_version="@VERSION@"
       if test $# -ge 1; then
         case "$1" in
-	  --doc | --do | --d | -d)
-	    shift; ssft_sh_doc "$@"; exit 0 ;;
+      --doc | --do | --d | -d)
+        shift; ssft_sh_doc "$@"; exit 0 ;;
           --help | --hel | --he | --h | -h)
             ssft_sh_usage; exit 0 ;;
           --version | --versio | --versi | --vers | --ver | --ve | --v | -v)
@@ -205,17 +205,20 @@ unset -f ssft_sh_fhs_test
 # 
 # Description: Calls the SSFT_PAGER program if the variable is set; if it isn't
 # tries with 'sensible-pager' if it exist and is executable or falls back to
-# using the PAGER variable or 'more' if it is not set
+# using the PAGER variable or 'more' if it is not set.
+#
+# If the pager is LESS we make it behave like more for short files or menus
+# (we call LESS with the options -FX)
 
 ssft_pager() {
   if [ -n "$SSFT_PAGER" ]; then
-    eval `echo $SSFT_PAGER`
+    LESS="-FX" eval `echo $SSFT_PAGER "$@"`
   elif [ -x "/usr/bin/sensible-pager" ]; then
-    /usr/bin/sensible-pager
+    LESS="-FX" /usr/bin/sensible-pager $@
   elif [ -n "$PAGER" ]; then
-    eval `echo $PAGER`
+    LESS="-FX" eval `echo $PAGER "$@"`
   else
-    more
+    more $@
   fi
 }
 
@@ -284,7 +287,7 @@ ssft_display_message() {
   # Read values
   case "$SSFT_FRONTEND" in
   zenity)
-    zenity --title "$_l_title" --info --text "$_l_message";
+    zenity --title "$_l_title" --info --text "$_l_message" 2> /dev/null;
   ;;
   kdialog)
     kdialog --title "$_l_title" --msgbox "$_l_message" 2> /dev/null;
@@ -337,7 +340,7 @@ ssft_display_error() {
   # Read values
   case "$SSFT_FRONTEND" in
   zenity)
-    zenity --title "$_l_title" --error --text "$_l_message";
+    zenity --title "$_l_title" --error --text "$_l_message" 2> /dev/null;
   ;;
   kdialog)
     kdialog --title "$_l_title" --error "$_l_message" 2> /dev/null;
@@ -405,10 +408,14 @@ ssft_file_selection() {
   # Read values
   case "$SSFT_FRONTEND" in
   zenity)
-    _l_fpath=$( zenity --title "$_l_title" --file-selection );
+    _l_fpath=$(
+	  zenity --title "$_l_title" --file-selection 2> /dev/null
+	);
   ;;
   kdialog)
-    _l_fpath=$( kdialog --title "$_l_title" --getopenfilename "`pwd`" "*" 2> /dev/null);
+    _l_fpath=$(
+	  kdialog --title "$_l_title" --getopenfilename "`pwd`" "*" 2> /dev/null
+	);
   ;;
   dialog)
     _l_fpath=$( dialog --stdout --title "$_l_title" --fselect "`pwd`" 0 0 );
@@ -455,10 +462,14 @@ ssft_directory_selection() {
   # Read values
   case "$SSFT_FRONTEND" in
   zenity)
-    _l_fpath=$( zenity --title "$_l_title" --file-selection --directory );
+    _l_fpath=$(
+      zenity --title "$_l_title" --file-selection --directory 2> /dev/null
+    );
   ;;
   kdialog)
-    _l_fpath=$( kdialog --title "$_l_title" --getexistingdirectory "`pwd`" 2> /dev/null);
+    _l_fpath=$(
+      kdialog --title "$_l_title" --getexistingdirectory "`pwd`" 2> /dev/null
+    );
   ;;
   dialog)
     _l_fpath=$( dialog --stdout --title "$_l_title" --dselect "`pwd`" 0 0 );
@@ -508,52 +519,43 @@ ssft_progress_bar() {
         s/^/# /g;
       };' 
     done | zenity --progress --title "$_l_title" --text "" \
-                  --percentage "$_l_percent" --auto-close
+                  --percentage "$_l_percent" --auto-close  \
+                  2> /dev/null
   ;;
   kdialog)
     _l_kdpbref="/tmp/kdpbdc-$PID.`date +"%s"`"
-    kdialog --progressbar "$_l_title" 100 > "$_l_kdpbref" 2> /dev/null
+    kdialog --title "$_l_title" --progressbar 100 > "$_l_kdpbref" 2> /dev/null
     if grep -q '^DCOPRef' $_l_kdpbref; then
-      DCOPREF=$( sed -n -e '/^DCOPRef/ {
-        s/DCOPRef(\(.*\),ProgressDialog)/\1/;
-        p
-        }' $_l_kdpbref);
-        rm -f "$_l_kdpbref"
-      dcop $DCOPREF ProgressDialog setAutoClose true
+      DCOPREF="$(
+        sed -n -e '/^DCOPRef/ { s/DCOPRef(\(.*\),ProgressDialog)/\1/; p }' \
+		    $_l_kdpbref
+      )";
+      rm -f "$_l_kdpbref"
+      dcop $DCOPREF ProgressDialog setAutoClose true 2> /dev/null 1>&2
       while read _l_line; do
-        _l_percent="`echo $_l_line | sed -n -e '/^[0-9][0-9]*/ {
-          p;
-        };'`"
+        _l_percent="`echo $_l_line | sed -n -e '/^[0-9][0-9]*/ { p; };'`"
         if [ -z "$_l_percent" ]; then
-          dcop $DCOPREF ProgressDialog setLabel "$_l_line" 2> /dev/null;
+          dcop $DCOPREF ProgressDialog setLabel "$_l_line" \
+               2> /dev/null 1>&2;
         else
-	  dcop $DCOPREF ProgressDialog setProgress "$_l_percent" 2> /dev/null;
-        fi
-      done
-      while read _l_line; do
-        _l_percent="`echo $_l_line | sed -n -e '/^[0-9][0-9]*/ {
-          p;
-        };'`"
-        if [ -z "$_l_percent" ]; then
-          _l_text="$_l_line"
-          dcop $DCOPREF ProgressDialog SetLabel "$_l_text"
-        else
-          dcop $DCOPREF ProgressDialog SetPercent "$_l_percent"
+          dcop $DCOPREF ProgressDialog setProgress "$_l_percent" \
+               2> /dev/null 1>&2;
         fi
       done
     else
-      DBUSREF=$(cat $_l_kdpbref)
+      DBUSREF="$(cat $_l_kdpbref)"
       rm -f "$_l_kdpbref"
-      qdbus $DBUSREF Set org.kde.kdialog.ProgressDialog autoClose true
+      qdbus $DBUSREF Set org.kde.kdialog.ProgressDialog autoClose true \
+            2> /dev/null 1>&2
       while read _l_line; do
-	_l_percent="`echo $_l_line | sed -n -e '/^[0-9][0-9]*/ {
-	  p;
-	};'`"
-	if [ -z "$_l_percent" ]; then
-	  qdbus $DBUSREF org.kde.kdialog.ProgressDialog.setLabelText "$_l_line" 2> /dev/null;
-	else
-	  qdbus $DBUSREF Set org.kde.kdialog.ProgressDialog value "$_l_percent" 2> /dev/null;
-	fi
+        _l_percent="`echo $_l_line | sed -n -e '/^[0-9][0-9]*/ { p; };'`"
+        if [ -z "$_l_percent" ]; then
+          qdbus $DBUSREF org.kde.kdialog.ProgressDialog.setLabelText "$_l_line" \
+                2> /dev/null 1>&2;
+        else
+          qdbus $DBUSREF Set org.kde.kdialog.ProgressDialog value "$_l_percent" \
+                2> /dev/null 1>&2;
+        fi
       done
     fi
   ;;
@@ -567,14 +569,12 @@ ssft_progress_bar() {
   text|*)
     ssft_print_text_title "$_l_title"
     while read _l_line; do
-      _l_percent="`echo $_l_line | sed -n -e '/^[0-9][0-9]*/ {
-        p;
-      };'`"
+      _l_percent="`echo $_l_line | sed -n -e '/^[0-9][0-9]*/ { p; };'`"
       if [ -z "$_l_percent" ]; then
         _l_text="$_l_line"
         echo "$_l_text"
       else
-	printf " [%3s%%] " "$_l_percent"
+        printf " [%3s%%] " "$_l_percent"
       fi
     done
     echo ""
@@ -618,15 +618,15 @@ ssft_read_string() {
   case "$SSFT_FRONTEND" in
   zenity)
     _l_string=$( zenity --title "$_l_title" --entry --text "$_l_question" \
-                 --entry-text "$_l_default");
+                 --entry-text "$_l_default" 2> /dev/null );
   ;;
   kdialog)
     _l_string=$( kdialog --title "$_l_title" --inputbox "$_l_question" \
-                 "$_l_default");
+                 "$_l_default" 2> /dev/null );
   ;;
   dialog)
     _l_string=$( dialog --stdout --title "$_l_title" --inputbox \
-                 "$_l_question" 0 0 "$_l_default");
+                 "$_l_question" 0 0 "$_l_default" );
   ;;
   text)
     if [ -n "$_l_default" ]; then
@@ -681,13 +681,20 @@ ssft_read_password() {
   # Read values
   case "$SSFT_FRONTEND" in
   zenity)
-    _l_string=$( zenity --title "$_l_title" --entry --hide-text --text "$_l_question" )
+    _l_string=$(
+      zenity --title "$_l_title" --entry --hide-text --text "$_l_question" \
+             2> /dev/null
+    )
   ;;
   kdialog)
-    _l_string=$( kdialog --title "$_l_title" --password "$_l_question" )
+    _l_string=$(
+      kdialog --title "$_l_title" --password "$_l_question" 2> /dev/null
+    )
   ;;
   dialog)
-    _l_string=$( dialog --stdout --title "$_l_title" --passwordbox "$_l_question" 0 0 )
+    _l_string=$(
+      dialog --stdout --title "$_l_title" --passwordbox "$_l_question" 0 0
+    )
   ;;
   text)
     ssft_print_text_title "$_l_title"
@@ -757,7 +764,8 @@ ssft_select_multiple() {
     _l_zitems="";
     _l_out="";
     for _l_item in "$@"; do
-      _l_selected=$( echo "$_l_default" | while read _l_line; do
+      _l_selected=$(
+	    echo "$_l_default" | while read _l_line; do
           if [ "$_l_item" = "$_l_line" ]; then echo "TRUE"; break; fi
         done
       ) 
@@ -770,22 +778,23 @@ ssft_select_multiple() {
         _l_zitems="$_l_zitems $_l_selected '$_l_item'"
       fi
     done
-    _l_out=$(echo "$_l_zitems" \
-      | xargs zenity --title "$_l_title" --list --checklist --text "$_l_question" \
-      --column "" --column "$_l_OPTIONS_STR" 2> /dev/null)
-    _l_string=$(echo $_l_out | sed -n -e '/^..*$/ {
-      s/|/\n/g;
-      p;
-    };')
+    _l_out=$(
+      echo "$_l_zitems" \
+      | xargs zenity --title "$_l_title" --list --checklist \
+	                 --text "$_l_question" --column ""      \
+					 --column "$_l_OPTIONS_STR" 2> /dev/null
+    )
+    _l_string=$( echo $_l_out | sed -n -e '/^..*$/ { s/|/\n/g; p; };' );
   ;;
   kdialog)
     _l_zitems="";
     _l_out="";
     for _l_item in "$@"; do
-      _l_selected=$( echo "$_l_default" | while read _l_line; do
+      _l_selected=$(
+        echo "$_l_default" | while read _l_line; do
           if [ "$_l_item" = "$_l_line" ]; then echo "on"; break; fi
         done
-      ) 
+      )
       if [ -z "$_l_selected" ]; then
         _l_selected="off";
       fi
@@ -795,17 +804,21 @@ ssft_select_multiple() {
         _l_zitems="$_l_zitems '$_l_item' '$_l_item' $_l_selected"
       fi
     done
-    _l_out=$(echo "$_l_zitems" \
+    _l_out=$(
+      echo "$_l_zitems" \
       | xargs kdialog --title "$_l_title" --checklist "$_l_question" \
-        2> /dev/null)
-    _l_string=$(echo $_l_out | sed -e 's/^"//; s/"$//; s/" "/\n/g;');
+        2> /dev/null
+    )
+    _l_string=$( echo $_l_out | sed -e 's/^"//; s/"$//; s/" "/\n/g;' );
   ;;
   dialog)
     _l_ditems="";
     for _l_item in "$@"; do
-      _l_selected=$( echo "$_l_default" | while read _l_line; do
+      _l_selected=$(
+	    echo "$_l_default" | while read _l_line; do
           if [ "$_l_item" = "$_l_line" ]; then echo "on"; break; fi
-        done ) 
+        done
+	  ) 
       if [ -z "$_l_selected" ]; then
         _l_selected="off";
       fi
@@ -815,10 +828,12 @@ ssft_select_multiple() {
         _l_ditems="$_l_ditems '$_l_item' '' $_l_selected"
       fi
     done
-    _l_out=$( echo "$_l_ditems" \
+    _l_out=$(
+      echo "$_l_ditems" \
       | xargs dialog --stdout --title "$_l_title" \
-      --checklist "$_l_question" 0 0 5 2> /dev/null );
-    _l_string=$(echo $_l_out | sed -e 's/^"//; s/"$//; s/" "/\n/g;');
+                     --checklist "$_l_question" 0 0 5 2> /dev/null
+    );
+    _l_string=$( echo $_l_out | sed -e 's/^"//; s/"$//; s/" "/\n/g;' );
   ;;
   text)
     ssft_print_text_title "$_l_title"
@@ -826,10 +841,11 @@ ssft_select_multiple() {
     _l_ss=""
     _l_count=0;
     for _l_item in "$@"; do
-      _l_selected=$( echo "$_l_default" | while read _l_line; do
+      _l_selected=$(
+        echo "$_l_default" | while read _l_line; do
           if [ "$_l_item" = "$_l_line" ]; then echo "x"; break; fi
         done
-      ) 
+      )
       if [ -z "$_l_selected" ]; then
         _l_selected=" ";
       fi
@@ -839,51 +855,56 @@ ssft_select_multiple() {
     while true; do
       _l_count=0;
       for _l_item in "$@"; do
-	if [ "$_l_count" -eq "0" ]; then
+        if [ "$_l_count" -eq "0" ]; then
           echo "$_l_question"
           echo ""
-	fi
+        fi
         _l_count=$(( $_l_count + 1 ))
-	_l_ss="$(echo "$_l_selected_items" | cut -b $_l_count)"
+        _l_ss="$( echo "$_l_selected_items" | cut -b $_l_count )"
         printf " (%s) %2s. %s\n" "$_l_ss" "$_l_count" "$_l_item"
       done | ssft_pager
       echo ""
       printf "%s: " "$_l_PROMPT_STR"
       read _l_option
-      _l_option=$(echo $_l_option \
+      _l_option=$(
+	    echo $_l_option \
         | sed -n -e '/^[[:space:]]*[0-9][0-9]*[[:space:]]*$/ {
-            s/[^0-9]//g;
-	    p;
-          };')
+		    s/[^0-9]//g; p;
+		  };'
+	  )
       if [ -n "$_l_option" ]; then
         if [ "$_l_option" -eq "0" ]; then
           _l_ret=0
-	  _l_count=0
-	  for _l_item in "$@"; do
+          _l_count=0
+          for _l_item in "$@"; do
             _l_count=$(( $_l_count + 1 ))
-	    _l_ss="$(echo "$_l_selected_items" | cut -b $_l_count)"
-	    if [ "$_l_ss" = "x" ]; then
-	      if [ -z "$_l_string" ]; then
-		_l_string="$_l_item"
-	      else
-		_l_string="`printf "%s\n%s" "$_l_string" "$_l_item"`"
-	      fi
-	    fi
-	  done
+            _l_ss="$( echo "$_l_selected_items" | cut -b $_l_count )"
+            if [ "$_l_ss" = "x" ]; then
+              if [ -z "$_l_string" ]; then
+                _l_string="$_l_item"
+              else
+                _l_string="`printf "%s\n%s" "$_l_string" "$_l_item"`"
+              fi
+            fi
+          done
           break;
         elif [ "$_l_option" -le "$_l_numitems" ]; then
-	  _l_prefix=""
-	  if [ "$_l_option" -gt "1" ]; then
-	    _l_prefix="$(echo "$_l_selected_items" | cut -b -$(( $_l_option - 1 )))"
-	  fi
-	  _l_suffix="$(echo "$_l_selected_items" | cut -b $(( $_l_option + 1 ))-)"
-	  _l_ss="$(echo "$_l_selected_items" | cut -b $_l_option)"
-	  if [ "$_l_ss" = " " ]; then
-	    _l_selected_items="${_l_prefix}x${_l_suffix}"
-	  else
-	    _l_selected_items="${_l_prefix} ${_l_suffix}"
-	  fi
-	fi
+          _l_prefix=""
+          if [ "$_l_option" -gt "1" ]; then
+            _l_prefix="$(
+			  echo "$_l_selected_items" | cut -b -$(( $_l_option - 1 ))
+			)"
+          fi
+          _l_suffix="$(
+		    echo "$_l_selected_items" | cut -b $(( $_l_option + 1 ))-
+		  )"
+          _l_ss="$( echo "$_l_selected_items" | cut -b $_l_option )"
+          if [ "$_l_ss" = " " ]; then
+            _l_selected_items="${_l_prefix}x${_l_suffix}"
+          else
+            _l_selected_items="${_l_prefix} ${_l_suffix}"
+          fi
+        fi
       fi
     done
     echo ""
@@ -966,9 +987,11 @@ ssft_select_single() {
         _l_zitems="$_l_zitems $_l_selected '$_l_item'"
       fi
     done
-    _l_string=$(echo "$_l_zitems" \
+    _l_string=$(
+	  echo "$_l_zitems" \
       | xargs zenity --title "$_l_title" --list --radiolist --text "$_l_question" \
-      --column "" --column "$_l_OPTIONS_STR" 2> /dev/null)
+      --column "" --column "$_l_OPTIONS_STR" 2> /dev/null
+	)
   ;;
   kdialog)
     _l_zitems="";
@@ -985,10 +1008,12 @@ ssft_select_single() {
         _l_zitems="$_l_zitems '$_l_item' '$_l_item' $_l_selected"
       fi
     done
-    _l_out=$(echo "$_l_zitems" \
+    _l_out=$(
+	  echo "$_l_zitems" \
       | xargs kdialog --title "$_l_title" --radiolist "$_l_question" \
-        2> /dev/null)
-    _l_string=$(echo $_l_out | sed -e 's/^"//; s/"$//; s/" "/\n/g;');
+        2> /dev/null
+	)
+    _l_string=$( echo $_l_out | sed -e 's/^"//; s/"$//; s/" "/\n/g;' );
   ;;
   dialog)
     _l_ditems="";
@@ -1004,49 +1029,53 @@ ssft_select_single() {
         _l_ditems="$_l_ditems '$_l_item' '' $_l_selected"
       fi
     done
-    _l_out=$( echo "$_l_ditems" \
+    _l_out=$(
+	  echo "$_l_ditems" \
       | xargs dialog --stdout --title "$_l_title" \
-      --radiolist "$_l_question" 0 0 5 2> /dev/null );
-    _l_string=$(echo $_l_out | sed -e 's/^"//; s/"$//; s/" "/\n/g;');
+      --radiolist "$_l_question" 0 0 5 2> /dev/null 
+	);
+    _l_string=$( echo $_l_out | sed -e 's/^"//; s/"$//; s/" "/\n/g;' );
   ;;
   text)
     ssft_print_text_title "$_l_title"
     while true; do
       _l_count=0;
       for _l_item in "$@"; do
-	if [ "$_l_count" -eq "0" ]; then
+        if [ "$_l_count" -eq "0" ]; then
           echo "$_l_question"
           echo ""
-	fi
+        fi
         _l_count=$(( $_l_count + 1 ))
-	if [ "$_l_item" = "$_l_default" ]; then
-	  _l_selected="*"
-	else
-	  _l_selected=" "
-	fi
+        if [ "$_l_item" = "$_l_default" ]; then
+          _l_selected="*"
+        else
+          _l_selected=" "
+        fi
         printf "%s %2s. %s\n" "$_l_selected" "$_l_count" "$_l_item"
       done | ssft_pager
       echo ""
       printf "%s: " "$_l_PROMPT_STR"
       read _l_option
       if [ -n "$_l_default" ] && [ "$_l_option" = "" ]; then
-	_l_string="$_l_default"
-	_l_ret=0
-	break;
+        _l_string="$_l_default"
+        _l_ret=0
+        break;
       fi
-      _l_option=$(echo $_l_option \
+      _l_option=$(
+	    echo $_l_option \
         | sed -n -e '/^[[:space:]]*[0-9][0-9]*[[:space:]]*$/ {
           s/[^0-9]//g;
           p;
-        };')
+        };'
+	  )
       if [ -n "$_l_option" ]; then
         if [ "$_l_option" -le "0" ]; then
           _l_ret=256
           break;
         elif [ "$_l_option" -le "$_l_numitems" ]; then
-	  _l_ret=0
-	  break;
-	fi
+          _l_ret=0
+          break;
+        fi
       fi
     done
     echo ""
@@ -1082,13 +1111,13 @@ ssft_select_single() {
       _l_count=$(( $_l_count + 1 ))
       if [ "$_l_option" = "$_l_count" ]; then
         _l_string="$_l_item";
-	break;
+        break;
       fi
     done
   fi
   SSFT_RESULT="$_l_string"
   test -n "$_l_string"
-  return $?
+  return "$?"
 }
 
 # Function: ssft_yesno TITLE QUESTION
@@ -1122,11 +1151,11 @@ ssft_yesno() {
   # Read values
   case "$SSFT_FRONTEND" in
   zenity)
-    zenity --title "$_l_title" --question --text "$_l_question";
+    zenity --title "$_l_title" --question --text "$_l_question" 2> /dev/null;
     _l_ret=$?
   ;;
   kdialog)
-    kdialog --title "$_l_title" --yesno "$_l_question";
+    kdialog --title "$_l_title" --yesno "$_l_question" 2> /dev/null;
     _l_ret=$?
   ;;
   dialog)
@@ -1145,15 +1174,15 @@ ssft_yesno() {
       if [ -n "$_l_yes_rep" ] && [ -z "$_l_no_rep" ] \
         && [ -z "$_l_cancel_rep" ]; then
         _l_ret=0;
-	break;
+    break;
       elif [ -z "$_l_yes_rep" ] && [ -n "$_l_no_rep" ] \
         && [ -z "$_l_cancel_rep" ]; then
         _l_ret=1;
-	break;
+    break;
       elif [ -z "$_l_yes_rep" ] && [ -z "$_l_no_rep" ] \
         && [ -n "$_l_cancel_rep" ]; then
         _l_ret=255;
-	break;
+    break;
       fi
     done
     echo ""
@@ -1189,13 +1218,29 @@ ssft_show_file() {
   # Test if the file is readable 
   test -r "$_l_file" || return 1
   
+  # Compute X11 window width & height -- fall back to 800x600
+  _l_dimensions="800x600"
+  case "$SSFT_FRONTEND" in
+  zenity|kdialog)
+    if [ -x "$(which xrandr)" ]; then
+      _l_dimensions="$( xrandr | awk '/\*/ { print $1 }' )"
+    elif [ -x "$(which xdpyinfo)" ]; then
+      _l_dimensions="$( xdpyinfo | awk '/dimensions:/ { print $2 }' )"
+    fi
+    ;;
+  esac
+  _l_width="${_l_dimensions%x*}"
+  _l_height="${_l_dimensions#*x}"
+
   # Show file 
   case "$SSFT_FRONTEND" in
   zenity)
-    zenity --title "$_l_title" --text-info --filename "$_l_file";
+    zenity --title "$_l_title" --text-info --filename "$_l_file" \
+           --width="$_l_width" --height="$_l_height" 2> /dev/null 
   ;;
   kdialog)
-    kdialog --title "$_l_title" --textbox "$_l_file" 2> /dev/null;
+    kdialog --title "$_l_title" --textbox "$_l_file" "$_l_width" "$_l_height" \
+            2> /dev/null;
   ;;
   dialog)
     dialog --stdout --title "$_l_title" --textbox "$_l_file" 0 0;

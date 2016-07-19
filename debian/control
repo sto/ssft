@@ -10,7 +10,7 @@ Standards-Version: 3.9.8
 Package: ssft
 Architecture: all
 Depends: ${misc:Depends}
-Recommends: gettext-base, dialog, zenity | kdebase-bin
+Recommends: gettext-base, dialog, zenity | kde-baseapps-bin
 Description: Shell Scripts Frontend Tool
  Shell function library useful to build shell script frontends.
  .

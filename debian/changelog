@@ -1,12 +1,15 @@
-ssft (0.9.14) UNRELEASED; urgency=low
+ssft (0.9.14) unstable; urgency=low
 
   * Use SSFT_PAGER, /usr/bin/sensible-pager or fallback to the PAGER variable
     if sensible-pager is not available (Closes: Bug#576524).
   * Added a README file to the package in asciidoc format (Closes: Bug#576525).
   * Fixed small manpage typo (Closes: Bug#580132).
+  * Set maximum width and height for kdialog and zenity when displaying a
+    file (Closes: Bug#406936).
+  * Show title on kdialog progress bar (Closes: Bug#406928).
   * Updated standards.
 
- -- Sergio Talens-Oliag <sto@debian.org>  Tue, 19 Jul 2016 00:51:15 +0200
+ -- Sergio Talens-Oliag <sto@debian.org>  Tue, 19 Jul 2016 09:55:21 +0200
 
 ssft (0.9.13) unstable; urgency=low
 
