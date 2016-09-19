@@ -1,3 +1,9 @@
+ssft (0.9.15) unstable; urgency=medium
+
+  * Changed github repository URL, now my user is 'sto' there.
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Mon, 19 Sep 2016 15:23:30 +0200
+
 ssft (0.9.14) unstable; urgency=low
 
   * Use SSFT_PAGER, /usr/bin/sensible-pager or fallback to the PAGER variable

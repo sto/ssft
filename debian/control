@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Sergio Talens-Oliag <sto@debian.org>
 Build-Depends: debhelper (>= 9)
 Build-Depends-Indep: gettext
-Vcs-Git: https://github.com/stogh/ssft.git
+Vcs-Git: https://github.com/sto/ssft.git
 Standards-Version: 3.9.8
 
 Package: ssft
