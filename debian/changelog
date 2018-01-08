@@ -1,3 +1,9 @@
+ssft (0.9.17) unstable; urgency=medium
+
+  * Added Multi-Arch: foreign to the control file.
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Mon, 08 Jan 2018 18:12:00 +0100
+
 ssft (0.9.16) unstable; urgency=medium
 
   * Depend on kdialog package, not kde-baseapps-bin (Closes: Bug#885842).

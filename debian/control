@@ -9,6 +9,7 @@ Standards-Version: 4.1.3
 
 Package: ssft
 Architecture: all
+Multi-Arch: foreign
 Depends: ${misc:Depends}
 Recommends: gettext-base, dialog, zenity | kdialog
 Description: Shell Scripts Frontend Tool
