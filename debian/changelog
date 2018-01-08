@@ -1,3 +1,9 @@
+ssft (0.9.16) unstable; urgency=medium
+
+  * Depend on kdialog package, not kde-baseapps-bin (Closes: Bug#885842).
+
+ -- Sergio Talens-Oliag <sto@debian.org>  Mon, 08 Jan 2018 17:07:41 +0100
+
 ssft (0.9.15) unstable; urgency=medium
 
   * Changed github repository URL, now my user is 'sto' there.
