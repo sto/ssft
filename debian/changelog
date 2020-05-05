@@ -1,6 +1,7 @@
 ssft (0.9.18) UNRELEASED; urgency=medium
 
   * Trim trailing whitespace.
+  * debian/control: Add Vcs-Browser field
 
  -- Debian Janitor <janitor@jelmer.uk>  Tue, 05 May 2020 22:57:37 +0000
 
