@@ -20,4 +20,4 @@ Description: Shell Scripts Frontend Tool
  plain text) and has been designed to be used by sourcing the library code
  from other scripts.
  .
- The library supports L10N if gettext.sh is installed. 
+ The library supports L10N if gettext.sh is installed.
