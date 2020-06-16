@@ -1,3 +1,12 @@
+ssft (0.9.18) UNRELEASED; urgency=medium
+
+  * Trim trailing whitespace.
+  * debian/control: Add Vcs-Browser field
+  * Bump debhelper from deprecated 9 to 12.
+  * Set debhelper-compat version in Build-Depends.
+
+ -- Debian Janitor <janitor@jelmer.uk>  Tue, 05 May 2020 22:57:37 +0000
+
 ssft (0.9.17) unstable; urgency=medium
 
   * Added Multi-Arch: foreign to the control file.
@@ -64,7 +73,7 @@ ssft (0.9.10) unstable; urgency=low
 
   * The make Jordi KDE free release.
   * Changed the Recommends line, now it uses zenity | kdebase-bin to avoid
-    installing kdebase-bin (or zenity) when using 'aptitude install'. 
+    installing kdebase-bin (or zenity) when using 'aptitude install'.
 
  -- Sergio Talens-Oliag <sto@debian.org>  Wed, 26 Apr 2006 23:41:02 +0200
 
